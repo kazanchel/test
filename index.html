@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <!-- <link rel="icon" href="favicon.ico"> -->
+    <link href="bootstrap.min.css" rel="stylesheet">
+    <link href="mycss.css" rel="stylesheet">
+    <title>Построение и исследование статистических оценок функции и плотности распределения</title>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h3 align="center">Добро пожаловать в программный коплекс: "Построение и исследование статистических оценок функции и плотности распределения"</h3>
+    <br>
+    <h4>Введите объем выборки n и число разрядов q</h4>
+
+    <div class="row">
+        <div class="col-md-3">n =<input type="text" id="n" value="10" placeholder=""></div>
+        <div class="col-md-3"> 5 ≤ n ≤ 1000</div>
+        <div class="col-md-3">q =<input type="text" id="q" value="5"></div>
+        <div class="col-md-3"> 5 ≤ q ≤ 25</div>
+    </div>
+    <br>
+
+    <h4>Выберите закон моделирования измерений и задайте его параметры</h4>
+
+    <div class="row">
+        <div class="col-md-3">
+            <div class="radio">
+                <label><input type="radio" name="q" id="ravnomernoe" checked>Равномерный</label>
+            </div>
+        </div>
+        <div class="col-md-3">
+            a =<input type="text" id="a" value="0">
+        </div>
+        <div class="col-md-3">
+            b =<input type="text" id="b" value="1">
+        </div>
+        <div class="col-md-3">-100 ≤ a ≤ 100; a < b ≤ 200</div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-3">
+            <div class="radio">
+                <label><input type="radio" name="q" id="exp">Показательный</label>
+            </div>
+        </div>
+        <div class="col-md-6">
+            λ =<input type="text" id="lamda" value="1">
+        </div>
+        <div class="col-md-3">0 < λ ≤ 10</div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-3">
+            <div class="radio">
+                <label><input type="radio" name="q" id="normal">Нормальный</label>
+            </div>
+        </div>
+        <div class="col-md-3">m =<input type="text" id="mu" value="0"></div>
+        <div class="col-md-3">σ ²=<input type="text" id="sigma" value="1"></div>
+        <div class="col-md-3">0 < σ ² ≤ 10</div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-3">
+            <div class="radio">
+                <label><input type="radio" name="q" id="youself" value="1">Ручной ввод массива</label>
+            </div>
+        </div>
+        <div class="col-md-9">
+            <div class="form-group">
+                <textarea class="form-control" rows="1" id="textar" style="resize:none" placeholder="Введите не более 100 чисел.
+Каждое число вводится через один пробел. Все числа вводятся в строку. В качестве десятичного разделителя используется точка.
+Например: 2.275 4.325 12.469"></textarea>
+            </div>
+        </div>
+    </div>
+    <br>
+    <h4>В соответствии с выбранным законом распределения и заданными параметрами
+        будут сгенерированы выбороные данные и построены графики функции и плотности
+        распределения. Для этого нажмите кнопку:</h4>
+    <input type="button" class="btn btn-default" onclick="abs = CreateMass();"
+           value="Генерация значений случайной величины и построение графиков"/>
+    <br><br><br>
+
+    <div id="chart1"></div>
+    <p>F(x) - график функции распределения</p>
+
+    <p>f(x) - график плотности распределения</p>
+
+    <p>Оранжевыми треугольниками обозначены сгенерированные значения выборки
+        в соответствии с заданным законом</p>
+    <br><br>
+
+    <h4 align="center">Статистическая оценка функции распределения</h4>
+    <br>
+    <h4>Выполним построение статистических оценок функции распределения. На основе
+        сгенерированной выборки будут построены графики эмпирической функции распределения F*(x)
+        и кумулятивной ломаной F**(x). Для оценки точности методов на графике синим цветом
+        представлена теоретическая функция распределения в соответствии с заданным законом.</h4>
+    <h4>Для этого нажмем на кнопку:</h4>
+    <input type="button" class="btn btn-default" onclick="BuildFunctionGraph(abs)" value="Построить графики"/>
+
+    <div id="chart2"></div>
+    <p>F(x) - график функции распределения</p>
+
+    <p>F*(x) - график эмпирической функции распределения</p>
+
+    <p>F**(x) - график кумулятивной ломаной</p>
+
+    <p>Оранжевыми треугольниками обозначены сгенерированные значения выборки
+        в соответствии с заданным законом</p>
+    <br><br>
+
+
+    <h4 align="center">Статистическая оценка плотности распределения</h4>
+    <br>
+    <h4>Выполним построение статистических оценок плотности распределения. На основе
+        сгенерированной выборки будут построены графики гистограммы f*(x) и полигона частот f**(x).
+        Для оценки точности методов на графике красным цветом представлена теоретическая плотность
+        распределения в соответствии с заданным законом.</h4>
+    <h4>Для этого нажмем на кнопку:</h4>
+    <input type="button" class="btn btn-default" onclick="BuidRaspredGraph(abs);" value="Построить графики"/>
+
+    <div id="chart3"></div>
+    <p>f(x) - график плотности распределения</p>
+
+    <p>f*(x) - график гистограммы</p>
+
+    <p>f**(x) - график полигона частот</p>
+
+    <p>Оранжевыми треугольниками обозначены сгенерированные значения выборки
+        в соответствии с заданным законом</p>
+    <br>
+    <br>
+
+    <h4 align="center">Учебно-исследовательская задача: "Построение и исследование зависимости
+        точности оценивания функции и плотности распределения от объема выборки"</h4>
+    <br>
+    <h4>Исследуем зависимость точности оценивания функции распределения
+        от n - объема выборки</h4>
+    <h4>Для этого нажмем на кнопку:</h4>
+    <input type="button" class="btn btn-default" onclick="MiddleDeltaFunc();" value="Начать исследование"/>
+
+    <div id="chart4"></div>
+    <p>ΔF(x) - график среднего отклонения метода по 100 выборкам при n = 30, 60, 90</p>
+    <br>
+    <br>
+
+    <h4>Исследуем зависимость точности оценивания плотности распределения
+        от n - объема выборки</h4>
+    <h4>Для этого нажмем на кнопку:</h4>
+    <input type="button" class="btn btn-default" onclick="MiddleDeltaPlotn();" value="Начать исследование"/>
+    <div id="chart5"></div>
+	<p>Δf(x) - график среднего отклонения метода по 100 выборкам при n = 30, 60, 90</p>
+    <br>
+    <br>
+
+    <div id="vivod" hidden>
+        <p>Были проведены исследование параметров функции распределения - F(x)
+            и плотности распределения - f(x) от n – объёма выборки. При проведении исследований,
+            было выявлено, что при увеличении объема выборки n точность методов возрастала.
+            Об этом свидетельствует уменьшение среднего ΔF и Δf: </p>
+        <table style="width:30%" id="result_table">
+            <tr>
+                <td>n</td>
+                <td>30</td>
+                <td>60</td>
+                <td>90</td>
+            </tr>
+            <tr>
+                <td>ΔF(x)</td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Δf(x)</td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+        </table>
+    </div>
+</div>
+<script src="jquery.js"></script>
+<script src="highcharts.js"></script>
+<script src="main.js"></script>
+
+</body>
+</html>
